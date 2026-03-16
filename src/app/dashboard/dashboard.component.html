@@ -1,0 +1,38 @@
+<div class="dash-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-emoji">🤖</span>
+      <span class="brand-name">PromptHub</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Menu</span>
+      @for (item of visibleNavItems; track item.route) {
+        <a class="nav-link"
+           [routerLink]="item.route"
+           routerLinkActive="active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">{{ username?.charAt(0)?.toUpperCase() }}</div>
+        <span class="user-name">{{ username }}</span>
+      </div>
+      <button mat-icon-button class="logout-btn" matTooltip="Sair" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Content -->
+  <main class="main-area">
+    <router-outlet />
+  </main>
+
+</div>

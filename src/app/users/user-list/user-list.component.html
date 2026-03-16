@@ -1,0 +1,97 @@
+<div class="page-shell">
+
+  <div class="page-top">
+    <div class="page-heading">
+      <h1>Usuários</h1>
+      <p>Gerencie os usuários da plataforma</p>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="filter-input">
+      <mat-label>Buscar por username</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="usernameFilter" (keyup.enter)="applyFilter()" />
+      @if (usernameFilter) {
+        <button mat-icon-button matSuffix (click)="clearFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="applyFilter()">Buscar</button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="loading-box"><mat-spinner diameter="44" /></div>
+  }
+
+  <!-- Empty -->
+  @if (!loading() && users().length === 0) {
+    <div class="empty-box ph-card">
+      <mat-icon>person_off</mat-icon>
+      <p>Nenhum usuário encontrado.</p>
+    </div>
+  }
+
+  <!-- Table -->
+  @if (!loading() && users().length > 0) {
+    <div class="users-table ph-card">
+      <div class="table-header">
+        <span class="col-user">Usuário</span>
+        <span class="col-email">E-mail</span>
+        <span class="col-role">Função</span>
+        <span class="col-status">Status</span>
+        <span class="col-actions"></span>
+      </div>
+
+      @for (user of users(); track user.id) {
+        <div class="table-row" (click)="goToDetail(user.id)">
+          <div class="col-user user-cell">
+            <div class="user-av">{{ user.username.charAt(0).toUpperCase() }}</div>
+            <span class="user-name">{{ user.username }}</span>
+          </div>
+          <span class="col-email user-email">{{ user.email }}</span>
+          <span class="col-role">
+            <span class="badge" [class.badge-warning]="user.role === 'ADMIN'" [class.badge-neutral]="user.role === 'USER'">
+              {{ user.role }}
+            </span>
+          </span>
+          <span class="col-status">
+            <span class="badge"
+              [class.badge-success]="user.status === 'ACTIVE'"
+              [class.badge-danger]="user.status === 'INACTIVE'"
+              [class.badge-neutral]="user.status === 'DELETED'">
+              {{ user.status === 'ACTIVE' ? 'Ativo' : user.status === 'INACTIVE' ? 'Inativo' : 'Deletado' }}
+            </span>
+          </span>
+          <div class="col-actions" (click)="$event.stopPropagation()">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="action-menu-btn">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="goToDetail(user.id)">
+                <mat-icon>visibility</mat-icon> Ver detalhes
+              </button>
+              @if (user.status !== 'DELETED') {
+                <button mat-menu-item (click)="toggleStatus(user)">
+                  <mat-icon>{{ user.status === 'ACTIVE' ? 'block' : 'check_circle' }}</mat-icon>
+                  {{ user.status === 'ACTIVE' ? 'Desativar' : 'Ativar' }}
+                </button>
+              }
+            </mat-menu>
+          </div>
+        </div>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalResults()"
+      [pageSize]="search.itemsPerPage!"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons />
+  }
+
+</div>

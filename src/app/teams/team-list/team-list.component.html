@@ -1,0 +1,86 @@
+<div class="page-shell">
+
+  <div class="page-top">
+    <div class="page-heading">
+      <h1>Times</h1>
+      <p>Gerencie os times da sua organização</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="goToCreate()">
+      <mat-icon>add</mat-icon> Novo Time
+    </button>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="filter-input">
+      <mat-label>Buscar por nome</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="nameFilter" (keyup.enter)="applyFilter()" />
+      @if (nameFilter) {
+        <button mat-icon-button matSuffix (click)="clearFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="applyFilter()">Buscar</button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="loading-box"><mat-spinner diameter="44" /></div>
+  }
+
+  <!-- Empty -->
+  @if (!loading() && teams().length === 0) {
+    <div class="empty-box ph-card">
+      <mat-icon>group_off</mat-icon>
+      <p>Nenhum time encontrado.</p>
+      <button mat-raised-button color="primary" (click)="goToCreate()">Criar primeiro time</button>
+    </div>
+  }
+
+  <!-- Grid -->
+  @if (!loading() && teams().length > 0) {
+    <div class="teams-grid">
+      @for (team of teams(); track team.id) {
+        <div class="team-card ph-card" (click)="goToDetail(team.id)">
+          <div class="tc-header">
+            <div class="tc-avatar">{{ team.name.charAt(0).toUpperCase() }}</div>
+            <div class="tc-meta">
+              <span class="tc-name">{{ team.name }}</span>
+              <span class="badge" [class.badge-success]="team.status === 'ACTIVE'" [class.badge-danger]="team.status === 'INACTIVE'">
+                {{ team.status === 'ACTIVE' ? 'Ativo' : 'Inativo' }}
+              </span>
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" class="tc-menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="goToDetail(team.id)">
+                <mat-icon>people</mat-icon> Membros
+              </button>
+              <button mat-menu-item (click)="goToEdit(team.id)">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+              <button mat-menu-item (click)="toggleStatus(team)">
+                <mat-icon>{{ team.status === 'ACTIVE' ? 'block' : 'check_circle' }}</mat-icon>
+                {{ team.status === 'ACTIVE' ? 'Desativar' : 'Ativar' }}
+              </button>
+            </mat-menu>
+          </div>
+          @if (team.description) {
+            <p class="tc-desc">{{ team.description }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalResults()"
+      [pageSize]="search.itemsPerPage!"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons />
+  }
+
+</div>

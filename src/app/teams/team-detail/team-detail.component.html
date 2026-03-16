@@ -1,0 +1,90 @@
+<div class="page-shell">
+
+  <!-- Back row -->
+  <div class="page-back-row">
+    <button mat-icon-button class="back-icon-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    @if (team()) {
+      <div class="detail-title">
+        <div class="detail-avatar">{{ team()!.name.charAt(0).toUpperCase() }}</div>
+        <div>
+          <h1>{{ team()!.name }}</h1>
+          <span class="badge" [class.badge-success]="team()!.status === 'ACTIVE'" [class.badge-danger]="team()!.status === 'INACTIVE'">
+            {{ team()!.status === 'ACTIVE' ? 'Ativo' : 'Inativo' }}
+          </span>
+        </div>
+      </div>
+      <button mat-stroked-button (click)="goToEdit()" class="edit-action">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box"><mat-spinner diameter="44" /></div>
+  }
+
+  @if (!loading() && team()) {
+
+    @if (team()!.description) {
+      <div class="desc-card ph-card">
+        <p>{{ team()!.description }}</p>
+      </div>
+    }
+
+    <!-- Members section -->
+    <div class="ph-card members-card">
+      <div class="members-header">
+        <div class="members-title">
+          <mat-icon>people</mat-icon>
+          <span>Membros</span>
+        </div>
+        <button mat-raised-button color="primary" (click)="openAddMember()">
+          <mat-icon>person_add</mat-icon> Adicionar
+        </button>
+      </div>
+
+      @if (loadingMembers()) {
+        <div class="loading-box"><mat-spinner diameter="36" /></div>
+      }
+
+      @if (!loadingMembers() && members().length === 0) {
+        <div class="empty-box">
+          <mat-icon>group_off</mat-icon>
+          <p>Nenhum membro ainda.</p>
+        </div>
+      }
+
+      @if (!loadingMembers() && members().length > 0) {
+        <div class="members-list">
+          @for (member of members(); track member.userId) {
+            <div class="member-row">
+              <div class="member-av">{{ member.username.charAt(0).toUpperCase() }}</div>
+              <div class="member-info">
+                <span class="member-name">{{ member.username }}</span>
+                <span class="member-email">{{ member.email }}</span>
+              </div>
+              <span class="role-badge" [class]="member.role.toLowerCase().replace('_', '-')">
+                {{ roleLabels[member.role] }}
+              </span>
+              <button mat-icon-button [matMenuTriggerFor]="mMenu" class="member-menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #mMenu="matMenu">
+                <button mat-menu-item (click)="openEditRole(member)">
+                  <mat-icon>manage_accounts</mat-icon> Alterar função
+                </button>
+                <button mat-menu-item class="item-danger" (click)="removeMember(member)">
+                  <mat-icon>person_remove</mat-icon> Remover
+                </button>
+              </mat-menu>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  }
+
+</div>

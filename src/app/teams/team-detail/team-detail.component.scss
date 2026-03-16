@@ -1,0 +1,113 @@
+.detail-title {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex: 1;
+
+  h1 { margin: 0 0 .25rem; }
+}
+
+.detail-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.edit-action {
+  margin-left: auto;
+  color: var(--text-secondary) !important;
+  border-color: var(--border) !important;
+}
+
+.desc-card {
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-secondary);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.members-card { padding: 1.5rem; }
+
+.members-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.members-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+
+  mat-icon { color: var(--primary); font-size: 1.2rem; }
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .65rem .5rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+
+  &:hover { background: var(--bg); }
+}
+
+.member-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-soft);
+  color: var(--primary);
+  font-size: .85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(102,126,234,.2);
+}
+
+.member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-name {
+  display: block;
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.member-email {
+  display: block;
+  font-size: .775rem;
+  color: var(--text-muted);
+}
+
+.member-menu { color: var(--text-muted) !important; }
+
+.item-danger {
+  color: var(--danger) !important;
+  mat-icon { color: var(--danger) !important; }
+}

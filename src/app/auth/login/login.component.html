@@ -1,0 +1,59 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <div class="auth-logo-wrap">
+      <span class="auth-emoji">🤖</span>
+      <h1>PromptHub</h1>
+      <p>Gerencie seus prompts de IA</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuário</mat-label>
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <input matInput formControlName="username" autocomplete="username" />
+        @if (username.hasError('required') && username.touched) {
+          <mat-error>Usuário é obrigatório</mat-error>
+        }
+        @if (username.hasError('minlength') && username.touched) {
+          <mat-error>Mínimo 3 caracteres</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <input matInput formControlName="password"
+               [type]="hidePassword ? 'password' : 'text'"
+               autocomplete="current-password" />
+        <button mat-icon-button matSuffix type="button"
+                (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (password.hasError('required') && password.touched) {
+          <mat-error>Senha é obrigatória</mat-error>
+        }
+        @if (password.hasError('minlength') && password.touched) {
+          <mat-error>Mínimo 6 caracteres</mat-error>
+        }
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit"
+              class="full-width auth-submit" [disabled]="loading">
+        @if (loading) { <mat-spinner diameter="20" /> }
+        @else { Entrar }
+      </button>
+
+    </form>
+
+    <div class="auth-links">
+      <span>Não tem conta?</span>
+      <a routerLink="/auth/register">Cadastre-se</a>
+    </div>
+    <div class="auth-links mt-1">
+      <a routerLink="/auth/change-password">Alterar senha</a>
+    </div>
+
+  </div>
+</div>

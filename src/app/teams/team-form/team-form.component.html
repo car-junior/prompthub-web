@@ -1,0 +1,49 @@
+<div class="page-shell">
+
+  <div class="page-back-row">
+    <button mat-icon-button class="back-icon-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ isEdit ? 'Editar Time' : 'Novo Time' }}</h1>
+  </div>
+
+  <div class="form-card ph-card">
+    @if (loadingData()) {
+      <div class="loading-box"><mat-spinner diameter="40" /></div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome do time</mat-label>
+          <mat-icon matPrefix>groups</mat-icon>
+          <input matInput formControlName="name" />
+          @if (name.hasError('required') && name.touched) {
+            <mat-error>Nome é obrigatório</mat-error>
+          }
+          @if (name.hasError('minlength') && name.touched) {
+            <mat-error>Mínimo 3 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descrição (opcional)</mat-label>
+          <mat-icon matPrefix>notes</mat-icon>
+          <textarea matInput formControlName="description" rows="4"></textarea>
+          @if (description.hasError('maxlength') && description.touched) {
+            <mat-error>Máximo 500 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="goBack()">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading()">
+            @if (loading()) { <mat-spinner diameter="18" /> }
+            @else { {{ isEdit ? 'Salvar alterações' : 'Criar time' }} }
+          </button>
+        </div>
+
+      </form>
+    }
+  </div>
+
+</div>

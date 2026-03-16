@@ -1,0 +1,114 @@
+<div class="page-shell">
+
+  <div class="page-back-row">
+    <button mat-icon-button class="back-icon-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    @if (user()) {
+      <div class="detail-title">
+        <div class="detail-avatar">{{ user()!.username.charAt(0).toUpperCase() }}</div>
+        <div>
+          <h1>{{ user()!.username }}</h1>
+          <span class="badge"
+            [class.badge-success]="user()!.status === 'ACTIVE'"
+            [class.badge-danger]="user()!.status === 'INACTIVE'"
+            [class.badge-neutral]="user()!.status === 'DELETED'">
+            {{ user()!.status === 'ACTIVE' ? 'Ativo' : user()!.status === 'INACTIVE' ? 'Inativo' : 'Deletado' }}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box"><mat-spinner diameter="44" /></div>
+  }
+
+  @if (!loading() && user()) {
+    <div class="detail-grid">
+
+      <!-- Info card -->
+      <div class="ph-card info-card">
+        <div class="card-section-title">
+          <mat-icon>person</mat-icon>
+          <span>Informações</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">E-mail</span>
+          <span class="info-value">{{ user()!.email }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Função</span>
+          <span class="info-value">
+            <span class="badge" [class.badge-warning]="user()!.role === 'ADMIN'" [class.badge-neutral]="user()!.role === 'USER'">
+              {{ user()!.role }}
+            </span>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Trocar senha</span>
+          <span class="info-value">
+            <span class="badge" [class.badge-warning]="user()!.mustChangePassword" [class.badge-neutral]="!user()!.mustChangePassword">
+              {{ user()!.mustChangePassword ? 'Pendente' : 'Não' }}
+            </span>
+          </span>
+        </div>
+        @if (user()!.createdDate) {
+          <div class="info-row">
+            <span class="info-label">Criado em</span>
+            <span class="info-value">{{ user()!.createdDate | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        }
+        @if (user()!.lastModifiedDate) {
+          <div class="info-row">
+            <span class="info-label">Atualizado em</span>
+            <span class="info-value">{{ user()!.lastModifiedDate | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Actions card -->
+      <div class="ph-card actions-card">
+        <div class="card-section-title">
+          <mat-icon>settings</mat-icon>
+          <span>Ações</span>
+        </div>
+
+        <div class="action-item">
+          <div class="action-info">
+            <span class="action-label">{{ user()!.status === 'ACTIVE' ? 'Desativar usuário' : 'Ativar usuário' }}</span>
+            <span class="action-desc">
+              {{ user()!.status === 'ACTIVE'
+                ? 'Impede o usuário de acessar a plataforma.'
+                : 'Restaura o acesso do usuário à plataforma.' }}
+            </span>
+          </div>
+          @if (user()!.status !== 'DELETED') {
+            <button mat-stroked-button
+              [color]="user()!.status === 'ACTIVE' ? 'warn' : 'primary'"
+              (click)="toggleStatus()">
+              <mat-icon>{{ user()!.status === 'ACTIVE' ? 'block' : 'check_circle' }}</mat-icon>
+              {{ user()!.status === 'ACTIVE' ? 'Desativar' : 'Ativar' }}
+            </button>
+          }
+        </div>
+
+        <div class="action-divider"></div>
+
+        <div class="action-item">
+          <div class="action-info">
+            <span class="action-label">Alterar função</span>
+            <span class="action-desc">Muda o nível de acesso global do usuário.</span>
+          </div>
+          <button mat-stroked-button color="primary" (click)="openChangeRole()">
+            <mat-icon>manage_accounts</mat-icon>
+            Alterar função
+          </button>
+        </div>
+      </div>
+
+    </div>
+  }
+
+</div>
