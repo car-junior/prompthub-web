@@ -170,6 +170,7 @@ html, body {
 .mat-mdc-dialog-surface {
   background: var(--card) !important;
   border: 1px solid var(--border) !important;
+  overflow: visible !important;
 }
 
 // Dialog title/content/actions text
@@ -177,6 +178,23 @@ html, body {
 .mat-mdc-dialog-content,
 .mat-mdc-dialog-actions {
   color: var(--text-primary) !important;
+}
+
+// Remove padding padrão do Material para usar os nossos
+.mat-mdc-dialog-title.ph-dialog-title {
+  padding: 1.25rem 1.5rem .75rem !important;
+  margin: 0 !important;
+}
+
+.mat-mdc-dialog-content.ph-dialog-content {
+  padding: 1.25rem 1.5rem !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.mat-mdc-dialog-actions.ph-dialog-actions {
+  padding: .75rem 1.5rem 1.25rem !important;
+  min-height: unset !important;
 }
 
 // Snackbars

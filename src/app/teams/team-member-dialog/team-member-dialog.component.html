@@ -1,4 +1,4 @@
-<h2 class="ph-dialog-title">
+<h2 mat-dialog-title class="ph-dialog-title">
   <mat-icon>{{ isEdit ? 'manage_accounts' : 'person_add' }}</mat-icon>
   {{ isEdit ? 'Alterar função' : 'Adicionar membro' }}
 </h2>
@@ -9,7 +9,7 @@
     @if (!isEdit) {
       <mat-form-field appearance="outline">
         <mat-label>ID do usuário</mat-label>
-        <input matInput type="number" formControlName="userId" />
+        <input matInput inputmode="numeric" pattern="[0-9]*" formControlName="userId" />
         @if (userId.hasError('required') && userId.touched) {
           <mat-error>ID do usuário é obrigatório</mat-error>
         }
