@@ -66,7 +66,7 @@ export class TeamDetailComponent implements OnInit {
   loadMembers(): void {
     this.loadingMembers.set(true);
     this.teamService.getMembers(this.teamId).subscribe({
-      next: (m) => { this.members.set(m); this.loadingMembers.set(false); },
+      next: (page) => { this.members.set(page.result); this.loadingMembers.set(false); },
       error: () => this.loadingMembers.set(false),
     });
   }
@@ -91,14 +91,14 @@ export class TeamDetailComponent implements OnInit {
     });
     ref.afterClosed().subscribe((result: MemberDialogResult | undefined) => {
       if (!result) return;
-      this.teamService.changeMemberRole(this.teamId, member.userId, { role: result.role }).subscribe({
+      this.teamService.changeMemberRole(this.teamId, member.user.id, { role: result.role }).subscribe({
         next: () => { this.notification.success('Função atualizada!'); this.loadMembers(); },
       });
     });
   }
 
   removeMember(member: TeamMember): void {
-    this.teamService.removeMember(this.teamId, member.userId).subscribe({
+    this.teamService.removeMember(this.teamId, member.user.id).subscribe({
       next: () => { this.notification.success('Membro removido.'); this.loadMembers(); },
     });
   }

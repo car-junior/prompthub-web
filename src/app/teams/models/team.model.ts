@@ -12,10 +12,15 @@ export interface Team {
   lastModifiedDate?: string;
 }
 
-export interface TeamMember {
-  userId: number;
+export interface TeamMemberUser {
+  id: number;
   username: string;
   email: string;
+}
+
+export interface TeamMember {
+  id: number;
+  user: TeamMemberUser;
   role: TeamRole;
 }
 

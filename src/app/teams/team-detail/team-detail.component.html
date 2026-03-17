@@ -58,14 +58,14 @@
 
       @if (!loadingMembers() && members().length > 0) {
         <div class="members-list">
-          @for (member of members(); track member.userId) {
+          @for (member of members(); track member.id) {
             <div class="member-row">
-              <div class="member-av">{{ member.username.charAt(0).toUpperCase() }}</div>
+              <div class="member-av">{{ member.user.username.charAt(0).toUpperCase() }}</div>
               <div class="member-info">
-                <span class="member-name">{{ member.username }}</span>
-                <span class="member-email">{{ member.email }}</span>
+                <span class="member-name">{{ member.user.username }}</span>
+                <span class="member-email">{{ member.user.email }}</span>
               </div>
-              <span class="role-badge" [class]="member.role.toLowerCase().replace('_', '-')">
+              <span class="role-badge role-{{ member.role.toLowerCase() }}">
                 {{ roleLabels[member.role] }}
               </span>
               <button mat-icon-button [matMenuTriggerFor]="mMenu" class="member-menu">

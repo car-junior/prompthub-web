@@ -50,8 +50,8 @@ export class TeamService {
   }
 
   // Members
-  getMembers(teamId: number): Observable<TeamMember[]> {
-    return this.http.get<TeamMember[]>(`${this.apiUrl}/${teamId}/members`);
+  getMembers(teamId: number): Observable<PageResult<TeamMember>> {
+    return this.http.get<PageResult<TeamMember>>(`${this.apiUrl}/${teamId}/members`);
   }
 
   addMember(teamId: number, data: AddMemberRequest): Observable<void> {
