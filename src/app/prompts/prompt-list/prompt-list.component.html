@@ -1,0 +1,99 @@
+<div class="page-shell">
+
+  <div class="page-top">
+    <div class="page-heading">
+      <h1>Prompts</h1>
+      <p>Explore e gerencie os prompts de IA</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="goToCreate()">
+      <mat-icon>add</mat-icon> Novo Prompt
+    </button>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="filter-input">
+      <mat-label>Buscar por nome</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="nameFilter" (keyup.enter)="applyFilter()" />
+      @if (nameFilter) {
+        <button mat-icon-button matSuffix (click)="clearFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="applyFilter()">Buscar</button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box"><mat-spinner diameter="44" /></div>
+  }
+
+  @if (!loading() && prompts().length === 0) {
+    <div class="empty-box ph-card">
+      <mat-icon>auto_awesome</mat-icon>
+      <p>Nenhum prompt encontrado.</p>
+      <button mat-raised-button color="primary" (click)="goToCreate()">Criar primeiro prompt</button>
+    </div>
+  }
+
+  @if (!loading() && prompts().length > 0) {
+    <div class="prompts-grid">
+      @for (prompt of prompts(); track prompt.id) {
+        <div class="prompt-card ph-card" (click)="goToDetail(prompt.id)">
+
+          <div class="pc-header">
+            <div class="pc-icon">
+              <mat-icon>auto_awesome</mat-icon>
+            </div>
+            <div class="pc-meta">
+              <h3 class="pc-name">{{ prompt.name }}</h3>
+              <span class="pc-owner">
+                @if (prompt.teamName) {
+                  <mat-icon class="owner-icon">groups</mat-icon> {{ prompt.teamName }}
+                } @else {
+                  <mat-icon class="owner-icon">person</mat-icon> {{ prompt.ownerUsername }}
+                }
+              </span>
+            </div>
+            <button mat-icon-button class="pc-menu" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="goToDetail(prompt.id)">
+                <mat-icon>visibility</mat-icon> Ver detalhes
+              </button>
+              <button mat-menu-item (click)="goToEdit(prompt.id)">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+            </mat-menu>
+          </div>
+
+          @if (prompt.description) {
+            <p class="pc-desc">{{ prompt.description }}</p>
+          }
+
+          @if (prompt.tags?.length) {
+            <div class="pc-tags">
+              @for (tag of prompt.tags.slice(0, 3); track tag.id) {
+                <span class="tag-pill">{{ tag.name }}</span>
+              }
+              @if (prompt.tags.length > 3) {
+                <span class="tag-pill tag-more">+{{ prompt.tags.length - 3 }}</span>
+              }
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalResults()"
+      [pageSize]="search.itemsPerPage!"
+      [pageSizeOptions]="[6, 12, 24]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons />
+  }
+
+</div>

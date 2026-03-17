@@ -1,0 +1,119 @@
+<div class="page-shell">
+
+  <div class="page-back-row">
+    <button mat-icon-button class="back-icon-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    @if (prompt()) {
+      <div class="detail-title">
+        <div class="detail-icon"><mat-icon>auto_awesome</mat-icon></div>
+        <div>
+          <h1>{{ prompt()!.name }}</h1>
+          <span class="owner-label">
+            @if (prompt()!.teamName) {
+              <mat-icon>groups</mat-icon> {{ prompt()!.teamName }}
+            } @else {
+              <mat-icon>person</mat-icon> {{ prompt()!.ownerUsername }}
+            }
+          </span>
+        </div>
+      </div>
+      <button mat-stroked-button class="edit-action" (click)="goToEdit()">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box"><mat-spinner diameter="44" /></div>
+  }
+
+  @if (!loading() && prompt()) {
+
+    <!-- Info -->
+    @if (prompt()!.description || prompt()!.tags?.length) {
+      <div class="ph-card info-card">
+        @if (prompt()!.description) {
+          <p class="prompt-desc">{{ prompt()!.description }}</p>
+        }
+        @if (prompt()!.tags?.length) {
+          <div class="tags-row">
+            @for (tag of prompt()!.tags; track tag.id) {
+              <span class="tag-pill">{{ tag.name }}</span>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Versions -->
+    <div class="ph-card versions-card">
+      <div class="versions-header">
+        <div class="versions-title">
+          <mat-icon>history</mat-icon>
+          <span>Versões</span>
+        </div>
+        <button mat-raised-button color="primary" (click)="openAddVersion()">
+          <mat-icon>add</mat-icon> Nova Versão
+        </button>
+      </div>
+
+      @if (loadingVersions()) {
+        <div class="loading-box"><mat-spinner diameter="36" /></div>
+      }
+
+      @if (!loadingVersions() && versions().length === 0) {
+        <div class="empty-box">
+          <mat-icon>history_toggle_off</mat-icon>
+          <p>Nenhuma versão ainda.</p>
+        </div>
+      }
+
+      @if (!loadingVersions() && versions().length > 0) {
+        <div class="versions-list">
+          @for (v of versions(); track v.id) {
+            <div class="version-row">
+              <div class="version-tag">v{{ v.version }}</div>
+              <div class="version-info">
+                <div class="version-badges">
+                  <span class="badge" [ngClass]="statusBadge[v.status]">{{ statusLabels[v.status] }}</span>
+                  <span class="badge" [ngClass]="visibilityBadge[v.visibility]">{{ visibilityLabels[v.visibility] }}</span>
+                </div>
+                @if (v.authorUsername) {
+                  <span class="version-author">por {{ v.authorUsername }}</span>
+                }
+              </div>
+              <div class="version-preview">{{ v.content | slice:0:80 }}{{ v.content.length > 80 ? '…' : '' }}</div>
+              <button mat-icon-button [matMenuTriggerFor]="vMenu" class="version-menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #vMenu="matMenu">
+                <button mat-menu-item (click)="openEditVersion(v)">
+                  <mat-icon>edit</mat-icon> Editar
+                </button>
+                <button mat-menu-item [matMenuTriggerFor]="statusMenu">
+                  <mat-icon>swap_horiz</mat-icon> Alterar status
+                </button>
+                <button mat-menu-item [matMenuTriggerFor]="visibilityMenu">
+                  <mat-icon>visibility</mat-icon> Alterar visibilidade
+                </button>
+              </mat-menu>
+              <mat-menu #statusMenu="matMenu">
+                <button mat-menu-item (click)="changeVersionStatus(v, 'DRAFT')">Rascunho</button>
+                <button mat-menu-item (click)="changeVersionStatus(v, 'PUBLISHED')">Publicado</button>
+                <button mat-menu-item (click)="changeVersionStatus(v, 'ARCHIVED')">Arquivado</button>
+              </mat-menu>
+              <mat-menu #visibilityMenu="matMenu">
+                <button mat-menu-item (click)="changeVersionVisibility(v, 'PUBLIC')">Público</button>
+                <button mat-menu-item (click)="changeVersionVisibility(v, 'PRIVATE')">Privado</button>
+                <button mat-menu-item (click)="changeVersionVisibility(v, 'TEAM')">Time</button>
+              </mat-menu>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  }
+
+</div>

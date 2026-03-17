@@ -1,0 +1,77 @@
+<div class="page-shell">
+
+  <div class="page-back-row">
+    <button mat-icon-button class="back-icon-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ isEdit ? 'Editar Prompt' : 'Novo Prompt' }}</h1>
+  </div>
+
+  <div class="form-card ph-card">
+    @if (loadingData()) {
+      <div class="loading-box"><mat-spinner diameter="40" /></div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome</mat-label>
+          <mat-icon matPrefix>auto_awesome</mat-icon>
+          <input matInput formControlName="name" />
+          @if (name.hasError('required') && name.touched) {
+            <mat-error>Nome é obrigatório</mat-error>
+          }
+          @if (name.hasError('minlength') && name.touched) {
+            <mat-error>Mínimo 3 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descrição (opcional)</mat-label>
+          <mat-icon matPrefix>notes</mat-icon>
+          <textarea matInput formControlName="description" rows="3"></textarea>
+        </mat-form-field>
+
+        <!-- Tipo de dono -->
+        <div class="field-group">
+          <label class="field-label">Pertence a</label>
+          <mat-radio-group formControlName="ownerType" class="radio-group">
+            <mat-radio-button value="personal">Pessoal (meu usuário)</mat-radio-button>
+            <mat-radio-button value="team">Time</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        @if (ownerType.value === 'team') {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Time</mat-label>
+            <mat-icon matPrefix>groups</mat-icon>
+            <mat-select formControlName="teamId">
+              @for (team of teams(); track team.id) {
+                <mat-option [value]="team.id">{{ team.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tags</mat-label>
+          <mat-icon matPrefix>label</mat-icon>
+          <mat-select formControlName="tagIds" multiple>
+            @for (tag of tags(); track tag.id) {
+              <mat-option [value]="tag.id">{{ tag.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="goBack()">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading()">
+            @if (loading()) { <mat-spinner diameter="18" /> }
+            @else { {{ isEdit ? 'Salvar alterações' : 'Criar prompt' }} }
+          </button>
+        </div>
+
+      </form>
+    }
+  </div>
+
+</div>

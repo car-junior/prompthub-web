@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>
+  <mat-icon>{{ isEdit ? 'edit' : 'label' }}</mat-icon>
+  {{ isEdit ? 'Editar Tag' : 'Nova Tag' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" novalidate>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome</mat-label>
+      <mat-icon matPrefix>label</mat-icon>
+      <input matInput formControlName="name" />
+      @if (name.hasError('required') && name.touched) {
+        <mat-error>Nome é obrigatório</mat-error>
+      }
+      @if (name.hasError('minlength') && name.touched) {
+        <mat-error>Mínimo 2 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Slug</mat-label>
+      <mat-icon matPrefix>tag</mat-icon>
+      <input matInput formControlName="slug" />
+      <mat-hint>Apenas letras minúsculas, números e hífens</mat-hint>
+      @if (slug.hasError('required') && slug.touched) {
+        <mat-error>Slug é obrigatório</mat-error>
+      }
+      @if (slug.hasError('pattern') && slug.touched) {
+        <mat-error>Formato inválido (ex: minha-tag)</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descrição (opcional)</mat-label>
+      <mat-icon matPrefix>notes</mat-icon>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+      @if (description.hasError('maxlength') && description.touched) {
+        <mat-error>Máximo 255 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="loading()">
+    @if (loading()) { <mat-spinner diameter="18" /> }
+    @else { {{ isEdit ? 'Salvar' : 'Criar' }} }
+  </button>
+</mat-dialog-actions>

@@ -42,8 +42,10 @@ export class DashboardComponent {
   readonly isAdmin = this.authService.isAdmin();
 
   readonly navItems: NavItem[] = [
+    { label: 'Prompts', icon: 'auto_awesome', route: 'prompts' },
     { label: 'Times', icon: 'groups', route: 'teams' },
     { label: 'Usuários', icon: 'people', route: 'users', adminOnly: true },
+    { label: 'Tags', icon: 'label', route: 'tags', adminOnly: true },
   ];
 
   get visibleNavItems(): NavItem[] {

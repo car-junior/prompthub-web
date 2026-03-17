@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>
+  <mat-icon>{{ isEdit ? 'edit' : 'add_circle' }}</mat-icon>
+  {{ isEdit ? 'Editar Versão' : 'Nova Versão' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" novalidate>
+
+    <div class="row-2">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Versão</mat-label>
+        <mat-icon matPrefix>tag</mat-icon>
+        <input matInput formControlName="version" placeholder="ex: 1.0.0" />
+        @if (version.hasError('required') && version.touched) {
+          <mat-error>Versão é obrigatória</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Visibilidade</mat-label>
+        <mat-icon matPrefix>visibility</mat-icon>
+        <mat-select formControlName="visibility">
+          @for (v of visibilities; track v.value) {
+            <mat-option [value]="v.value">{{ v.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Conteúdo do prompt</mat-label>
+      <textarea matInput formControlName="content" rows="10" class="content-area"></textarea>
+      @if (content.hasError('required') && content.touched) {
+        <mat-error>Conteúdo é obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="loading()">
+    @if (loading()) { <mat-spinner diameter="18" /> }
+    @else { {{ isEdit ? 'Salvar' : 'Criar' }} }
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,28 @@
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+mat-dialog-content {
+  padding-top: 1rem !important;
+  min-width: 380px;
+}
+
+mat-form-field { margin-bottom: .75rem; }
+
+mat-dialog-actions {
+  padding: .75rem 0 0;
+  gap: .75rem;
+
+  button {
+    min-width: 90px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+  }
+}
