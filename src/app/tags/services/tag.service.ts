@@ -16,7 +16,7 @@ export class TagService {
     if (search.itemsPerPage != null) params = params.set('itemsPerPage', search.itemsPerPage);
     if (search.sort) params = params.set('sort', search.sort);
     if (search.sortName) params = params.set('sortName', search.sortName);
-    if (search.name) params = params.set('name', search.name);
+    if (search.query) params = params.set('query', search.query);
     if (search.slug) params = params.set('slug', search.slug);
     return this.http.get<PageResult<Tag>>(this.apiUrl, { params });
   }

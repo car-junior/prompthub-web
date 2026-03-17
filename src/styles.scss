@@ -68,33 +68,33 @@ $ph-theme: mat.define-light-theme((
   --surface-600:    #252d3d;
   --surface-500:    #2e3850;
 
-  // Content area (soft dark)
-  --bg:             #1a1f2e;
-  --bg-2:           #1e2438;
-  --card:           #242b3d;
-  --card-hover:     #2a3249;
-  --border:         rgba(255,255,255,.08);
+  // Content area (soft light)
+  --bg:             #eef0f5;
+  --bg-2:           #e8eaf2;
+  --card:           #ffffff;
+  --card-hover:     #f8f9fc;
+  --border:         #dde1ec;
 
   // Text
-  --text-primary:   #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-muted:     #64748b;
+  --text-primary:   #1e2235;
+  --text-secondary: #5a6380;
+  --text-muted:     #8e97b0;
   --text-on-dark:   #e2e8f0;
   --text-on-dark-muted: rgba(226,232,240,.55);
 
   // Status
-  --success:        #34d399;
-  --success-bg:     rgba(52,211,153,.15);
-  --success-text:   #6ee7b7;
-  --danger:         #f87171;
-  --danger-bg:      rgba(248,113,113,.15);
-  --danger-text:    #fca5a5;
-  --warning:        #fbbf24;
-  --warning-bg:     rgba(251,191,36,.15);
-  --warning-text:   #fde68a;
-  --info:           #60a5fa;
-  --info-bg:        rgba(96,165,250,.15);
-  --info-text:      #93c5fd;
+  --success:        #10b981;
+  --success-bg:     #d1fae5;
+  --success-text:   #065f46;
+  --danger:         #ef4444;
+  --danger-bg:      #fee2e2;
+  --danger-text:    #991b1b;
+  --warning:        #f59e0b;
+  --warning-bg:     #fef3c7;
+  --warning-text:   #92400e;
+  --info:           #3b82f6;
+  --info-bg:        #dbeafe;
+  --info-text:      #1e40af;
 
   // Misc
   --radius-sm:      6px;
@@ -128,23 +128,24 @@ html, body {
 // Form fields
 .mat-mdc-form-field {
   --mdc-outlined-text-field-container-shape: var(--radius);
-  --mdc-outlined-text-field-outline-color: rgba(255,255,255,.15);
-  --mdc-outlined-text-field-hover-outline-color: rgba(255,255,255,.3);
+  --mdc-outlined-text-field-outline-color: var(--border);
+  --mdc-outlined-text-field-hover-outline-color: #a0a8c0;
   --mdc-outlined-text-field-focus-outline-color: var(--primary);
   --mdc-outlined-text-field-label-text-color: var(--text-secondary);
   --mdc-outlined-text-field-input-text-color: var(--text-primary);
-  --mdc-outlined-text-field-container-color: rgba(255,255,255,.04);
+  --mdc-outlined-text-field-container-color: #fff;
 }
 
 // Select panel
 .mat-mdc-select-panel {
-  background: var(--card) !important;
+  background: #fff !important;
   border: 1px solid var(--border) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1) !important;
 }
 
 .mat-mdc-option {
   color: var(--text-primary) !important;
-  &:hover, &.mat-mdc-option-active { background: rgba(255,255,255,.06) !important; }
+  &:hover, &.mat-mdc-option-active { background: var(--bg) !important; }
 }
 
 // Buttons
@@ -157,19 +158,20 @@ html, body {
 }
 
 .mat-mdc-outlined-button:not([color]) {
-  --mdc-outlined-button-outline-color: rgba(255,255,255,.2);
+  --mdc-outlined-button-outline-color: var(--border);
   --mdc-outlined-button-label-text-color: var(--text-secondary);
 }
 
 // Cards / dialogs
 .mat-mdc-dialog-container {
   --mdc-dialog-container-shape: var(--radius-lg);
-  --mdc-dialog-container-color: var(--card);
+  --mdc-dialog-container-color: #fff;
 }
 
 .mat-mdc-dialog-surface {
-  background: var(--card) !important;
+  background: #fff !important;
   border: 1px solid var(--border) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,.12) !important;
   overflow: visible !important;
 }
 
@@ -220,21 +222,22 @@ html, body {
   background: var(--card) !important;
   color: var(--text-primary) !important;
 }
-.mat-mdc-header-row { background: rgba(255,255,255,.03) !important; }
-.mat-mdc-header-cell { color: var(--text-secondary) !important; border-bottom-color: var(--border) !important; }
+.mat-mdc-header-row { background: var(--bg) !important; }
+.mat-mdc-header-cell { color: var(--text-secondary) !important; border-bottom-color: var(--border) !important; font-weight: 600 !important; }
 .mat-mdc-cell { color: var(--text-primary) !important; border-bottom-color: var(--border) !important; }
-.mat-mdc-row:hover .mat-mdc-cell { background: rgba(255,255,255,.03) !important; }
+.mat-mdc-row:hover .mat-mdc-cell { background: var(--bg) !important; }
 
 // Menu
 .mat-mdc-menu-panel {
-  background: var(--card) !important;
+  background: #fff !important;
   border: 1px solid var(--border) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1) !important;
 }
 .mat-mdc-menu-item { color: var(--text-primary) !important; }
-.mat-mdc-menu-item:hover { background: rgba(255,255,255,.06) !important; }
+.mat-mdc-menu-item:hover { background: var(--bg) !important; }
 
 // Chips
-.mat-mdc-chip { background: rgba(255,255,255,.08) !important; color: var(--text-primary) !important; }
+.mat-mdc-chip { background: var(--bg) !important; color: var(--text-primary) !important; }
 
 // Radio
 .mat-mdc-radio-button .mdc-label { color: var(--text-primary) !important; }
@@ -266,12 +269,12 @@ html, body {
 }
 
 .auth-card {
-  background: var(--card);
+  background: #fff;
   border-radius: var(--radius-xl);
   padding: 2.5rem 2.25rem;
   width: 100%;
   max-width: 440px;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
   border: 1px solid var(--border);
 }
 
@@ -519,7 +522,7 @@ html, body {
   background: var(--card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  box-shadow: 0 4px 24px rgba(0,0,0,.25);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
   padding: 1.5rem;
 }
 
@@ -560,8 +563,17 @@ html, body {
   &.viewer     { background: #f3f4f6;           color: #374151;             }
 }
 
-// ============================================
-// FORM PAGE — layout padrão para formulários de página
+// Filter row — remove espaço reservado de erro no campo de busca
+.filter-row .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.filter-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
 // ============================================
 .form-page-card {
   max-width: 640px;

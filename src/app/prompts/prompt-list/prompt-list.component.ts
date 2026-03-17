@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { PaginatorComponent } from '../../shared/paginator/paginator.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PromptService } from '../services/prompt.service';
@@ -27,9 +27,8 @@ import { PromptFormDialogComponent } from '../prompt-form-dialog/prompt-form-dia
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatPaginatorModule,
     MatChipsModule,
-    MatDialogModule,
+    PaginatorComponent,
   ],
   templateUrl: './prompt-list.component.html',
   styleUrls: ['./prompt-list.component.scss'],
@@ -44,7 +43,7 @@ export class PromptListComponent implements OnInit {
   totalResults = signal(0);
 
   search: PromptSearch = { page: 0, itemsPerPage: 12, sortName: 'name', sort: 'ASC' };
-  nameFilter = '';
+  queryFilter = '';
 
   ngOnInit(): void {
     this.load();
@@ -63,18 +62,18 @@ export class PromptListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.search = { ...this.search, page: 0, name: this.nameFilter || undefined };
+    this.search = { ...this.search, page: 0, query: this.queryFilter || undefined };
     this.load();
   }
 
   clearFilter(): void {
-    this.nameFilter = '';
-    this.search = { ...this.search, page: 0, name: undefined };
+    this.queryFilter = '';
+    this.search = { ...this.search, page: 0, query: undefined };
     this.load();
   }
 
-  onPageChange(event: PageEvent): void {
-    this.search = { ...this.search, page: event.pageIndex, itemsPerPage: event.pageSize };
+  onPageChange(page: number): void {
+    this.search = { ...this.search, page };
     this.load();
   }
 

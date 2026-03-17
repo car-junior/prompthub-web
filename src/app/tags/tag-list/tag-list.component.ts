@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { PaginatorComponent } from '../../shared/paginator/paginator.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TagService } from '../services/tag.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -27,7 +27,7 @@ import { TagFormDialogComponent } from '../tag-form-dialog/tag-form-dialog.compo
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatPaginatorModule,
+    PaginatorComponent,
     MatDialogModule,
   ],
   templateUrl: './tag-list.component.html',
@@ -44,7 +44,7 @@ export class TagListComponent implements OnInit {
   totalResults = signal(0);
 
   search: TagSearch = { page: 0, itemsPerPage: 10, sortName: 'name', sort: 'ASC' };
-  nameFilter = '';
+  queryFilter = '';
 
   ngOnInit(): void {
     this.load();
@@ -63,18 +63,18 @@ export class TagListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.search = { ...this.search, page: 0, name: this.nameFilter || undefined };
+    this.search = { ...this.search, page: 0, query: this.queryFilter || undefined };
     this.load();
   }
 
   clearFilter(): void {
-    this.nameFilter = '';
-    this.search = { ...this.search, page: 0, name: undefined };
+    this.queryFilter = '';
+    this.search = { ...this.search, page: 0, query: undefined };
     this.load();
   }
 
-  onPageChange(event: PageEvent): void {
-    this.search = { ...this.search, page: event.pageIndex, itemsPerPage: event.pageSize };
+  onPageChange(page: number): void {
+    this.search = { ...this.search, page };
     this.load();
   }
 

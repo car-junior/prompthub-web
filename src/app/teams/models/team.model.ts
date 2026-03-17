@@ -36,7 +36,7 @@ export interface TeamWithMembersRequest {
 }
 
 export interface TeamSearch extends PageParams {
-  name?: string;
+  query?: string;
   status?: TeamStatus;
 }
 

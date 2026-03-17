@@ -1,0 +1,21 @@
+@if (totalPages > 1) {
+  <div class="ph-paginator">
+    <button class="pg-btn pg-nav" (click)="prev()" [disabled]="page === 0" matTooltip="Anterior">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    @for (p of pages; track $index) {
+      @if (p === '...') {
+        <span class="pg-dots">···</span>
+      } @else {
+        <button class="pg-btn" [class.pg-active]="p === page" (click)="goTo(p)">
+          {{ +p + 1 }}
+        </button>
+      }
+    }
+
+    <button class="pg-btn pg-nav" (click)="next()" [disabled]="page === totalPages - 1" matTooltip="Próxima">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+}

@@ -29,7 +29,7 @@ export class PromptService {
     if (search.itemsPerPage != null) params = params.set('itemsPerPage', search.itemsPerPage);
     if (search.sort) params = params.set('sort', search.sort);
     if (search.sortName) params = params.set('sortName', search.sortName);
-    if (search.name) params = params.set('name', search.name);
+    if (search.query) params = params.set('query', search.query);
     if (search.teamId != null) params = params.set('teamId', search.teamId);
     if (search.ownerId != null) params = params.set('ownerId', search.ownerId);
     if (search.tagId != null) params = params.set('tagId', search.tagId);

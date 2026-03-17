@@ -17,7 +17,7 @@ export class UserService {
     if (search.itemsPerPage != null) params = params.set('itemsPerPage', search.itemsPerPage);
     if (search.sort) params = params.set('sort', search.sort);
     if (search.sortName) params = params.set('sortName', search.sortName);
-    if (search.username) params = params.set('username', search.username);
+    if (search.query) params = params.set('query', search.query);
     if (search.role) params = params.set('role', search.role);
     if (search.status) params = params.set('status', search.status);
     return this.http.get<PageResult<User>>(this.apiUrl, { params });

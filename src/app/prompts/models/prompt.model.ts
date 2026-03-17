@@ -52,7 +52,7 @@ export interface PromptVersionUpdateRequest {
 }
 
 export interface PromptSearch extends PageParams {
-  name?: string;
+  query?: string;
   teamId?: number;
   ownerId?: number;
   tagId?: number;

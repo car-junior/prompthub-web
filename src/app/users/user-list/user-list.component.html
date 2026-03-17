@@ -12,8 +12,8 @@
     <mat-form-field appearance="outline" class="filter-input">
       <mat-label>Buscar por username</mat-label>
       <mat-icon matPrefix>search</mat-icon>
-      <input matInput [(ngModel)]="usernameFilter" (keyup.enter)="applyFilter()" />
-      @if (usernameFilter) {
+      <input matInput [(ngModel)]="queryFilter" (keyup.enter)="applyFilter()" />
+      @if (queryFilter) {
         <button mat-icon-button matSuffix (click)="clearFilter()">
           <mat-icon>close</mat-icon>
         </button>
@@ -86,12 +86,11 @@
       }
     </div>
 
-    <mat-paginator
-      [length]="totalResults()"
+    <app-paginator
+      [totalResults]="totalResults()"
       [pageSize]="search.itemsPerPage!"
-      [pageSizeOptions]="[5, 10, 25]"
-      (page)="onPageChange($event)"
-      showFirstLastButtons />
+      [page]="search.page!"
+      (pageChange)="onPageChange($event)" />
   }
 
 </div>

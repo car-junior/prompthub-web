@@ -16,6 +16,6 @@ export interface TagCreateRequest {
 }
 
 export interface TagSearch extends PageParams {
-  name?: string;
+  query?: string;
   slug?: string;
 }

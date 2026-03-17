@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { PaginatorComponent } from '../../shared/paginator/paginator.component';
 import { UserService } from '../services/user.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { User } from '../../core/models/user.model';
@@ -26,7 +26,7 @@ import { UserSearch } from '../models/user-search.model';
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatPaginatorModule,
+    PaginatorComponent,
   ],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
@@ -41,7 +41,7 @@ export class UserListComponent implements OnInit {
   totalResults = signal(0);
 
   search: UserSearch = { page: 0, itemsPerPage: 10, sortName: 'username', sort: 'ASC' };
-  usernameFilter = '';
+  queryFilter = '';
 
   ngOnInit(): void {
     this.load();
@@ -60,18 +60,18 @@ export class UserListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.search = { ...this.search, page: 0, username: this.usernameFilter || undefined };
+    this.search = { ...this.search, page: 0, query: this.queryFilter || undefined };
     this.load();
   }
 
   clearFilter(): void {
-    this.usernameFilter = '';
-    this.search = { ...this.search, page: 0, username: undefined };
+    this.queryFilter = '';
+    this.search = { ...this.search, page: 0, query: undefined };
     this.load();
   }
 
-  onPageChange(event: PageEvent): void {
-    this.search = { ...this.search, page: event.pageIndex, itemsPerPage: event.pageSize };
+  onPageChange(page: number): void {
+    this.search = { ...this.search, page };
     this.load();
   }
 
