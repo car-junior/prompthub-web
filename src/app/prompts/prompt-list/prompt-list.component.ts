@@ -10,8 +10,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PromptService } from '../services/prompt.service';
 import { Prompt, PromptSearch } from '../models/prompt.model';
+import { PromptFormDialogComponent } from '../prompt-form-dialog/prompt-form-dialog.component';
 
 @Component({
   selector: 'app-prompt-list',
@@ -27,6 +29,7 @@ import { Prompt, PromptSearch } from '../models/prompt.model';
     MatMenuModule,
     MatPaginatorModule,
     MatChipsModule,
+    MatDialogModule,
   ],
   templateUrl: './prompt-list.component.html',
   styleUrls: ['./prompt-list.component.scss'],
@@ -34,6 +37,7 @@ import { Prompt, PromptSearch } from '../models/prompt.model';
 export class PromptListComponent implements OnInit {
   private readonly promptService = inject(PromptService);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   prompts = signal<Prompt[]>([]);
   loading = signal(false);
@@ -78,11 +82,15 @@ export class PromptListComponent implements OnInit {
     this.router.navigate(['/dashboard/prompts', id]);
   }
 
-  goToCreate(): void {
-    this.router.navigate(['/dashboard/prompts/new']);
+  openCreate(): void {
+    this.dialog.open(PromptFormDialogComponent, { data: null, width: '520px' })
+      .afterClosed().subscribe(prompt => {
+        if (prompt) this.router.navigate(['/dashboard/prompts', prompt.id]);
+      });
   }
 
-  goToEdit(id: number): void {
-    this.router.navigate(['/dashboard/prompts', id, 'edit']);
+  openEdit(prompt: Prompt): void {
+    this.dialog.open(PromptFormDialogComponent, { data: prompt, width: '520px' })
+      .afterClosed().subscribe(ok => { if (ok) this.load(); });
   }
 }

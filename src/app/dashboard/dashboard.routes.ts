@@ -25,6 +25,10 @@ export const DASHBOARD_ROUTES: Routes = [
         canActivate: [adminGuard],
         loadChildren: () => import('../tags/tags.routes').then(m => m.TAGS_ROUTES),
       },
+      {
+        path: 'profile',
+        loadComponent: () => import('../profile/profile.component').then(m => m.ProfileComponent),
+      },
     ],
   },
 ];

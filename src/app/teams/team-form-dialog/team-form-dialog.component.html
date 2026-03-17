@@ -1,31 +1,19 @@
 <h2 class="ph-dialog-title">
-  <mat-icon>{{ isEdit ? 'edit' : 'label' }}</mat-icon>
-  {{ isEdit ? 'Editar Tag' : 'Nova Tag' }}
+  <mat-icon>{{ isEdit ? 'edit' : 'groups' }}</mat-icon>
+  {{ isEdit ? 'Editar Time' : 'Novo Time' }}
 </h2>
 
 <mat-dialog-content class="ph-dialog-content">
   <form [formGroup]="form" novalidate>
 
     <mat-form-field appearance="outline">
-      <mat-label>Nome</mat-label>
+      <mat-label>Nome do time</mat-label>
       <input matInput formControlName="name" />
       @if (name.hasError('required') && name.touched) {
         <mat-error>Nome é obrigatório</mat-error>
       }
       @if (name.hasError('minlength') && name.touched) {
-        <mat-error>Mínimo 2 caracteres</mat-error>
-      }
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Slug</mat-label>
-      <input matInput formControlName="slug" />
-      <mat-hint>Apenas letras minúsculas, números e hífens</mat-hint>
-      @if (slug.hasError('required') && slug.touched) {
-        <mat-error>Slug é obrigatório</mat-error>
-      }
-      @if (slug.hasError('pattern') && slug.touched) {
-        <mat-error>Formato inválido (ex: minha-tag)</mat-error>
+        <mat-error>Mínimo 3 caracteres</mat-error>
       }
     </mat-form-field>
 
@@ -33,7 +21,7 @@
       <mat-label>Descrição (opcional)</mat-label>
       <textarea matInput formControlName="description" rows="3"></textarea>
       @if (description.hasError('maxlength') && description.touched) {
-        <mat-error>Máximo 255 caracteres</mat-error>
+        <mat-error>Máximo 500 caracteres</mat-error>
       }
     </mat-form-field>
 

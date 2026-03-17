@@ -55,4 +55,8 @@ export class DashboardComponent {
   logout(): void {
     this.authService.logout();
   }
+
+  goToProfile(): void {
+    this.router.navigate(['/dashboard/profile']);
+  }
 }

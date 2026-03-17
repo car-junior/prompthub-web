@@ -5,7 +5,7 @@
       <h1>Prompts</h1>
       <p>Explore e gerencie os prompts de IA</p>
     </div>
-    <button mat-raised-button color="primary" (click)="goToCreate()">
+    <button mat-raised-button color="primary" (click)="openCreate()">
       <mat-icon>add</mat-icon> Novo Prompt
     </button>
   </div>
@@ -33,7 +33,7 @@
     <div class="empty-box ph-card">
       <mat-icon>auto_awesome</mat-icon>
       <p>Nenhum prompt encontrado.</p>
-      <button mat-raised-button color="primary" (click)="goToCreate()">Criar primeiro prompt</button>
+      <button mat-raised-button color="primary" (click)="openCreate()">Criar primeiro prompt</button>
     </div>
   }
 
@@ -63,7 +63,7 @@
               <button mat-menu-item (click)="goToDetail(prompt.id)">
                 <mat-icon>visibility</mat-icon> Ver detalhes
               </button>
-              <button mat-menu-item (click)="goToEdit(prompt.id)">
+              <button mat-menu-item (click)="openEdit(prompt)">
                 <mat-icon>edit</mat-icon> Editar
               </button>
             </mat-menu>

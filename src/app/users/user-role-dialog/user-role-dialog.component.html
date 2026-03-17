@@ -1,18 +1,17 @@
-<h2 mat-dialog-title>
+<h2 class="ph-dialog-title">
   <mat-icon>manage_accounts</mat-icon>
   Alterar função
 </h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="ph-dialog-content">
   <form [formGroup]="form" novalidate>
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline">
       <mat-label>Função global</mat-label>
       <mat-select formControlName="role">
         @for (r of roles; track r.value) {
           <mat-option [value]="r.value">{{ r.label }}</mat-option>
         }
       </mat-select>
-      <mat-icon matPrefix>badge</mat-icon>
       @if (role.hasError('required') && role.touched) {
         <mat-error>Selecione uma função</mat-error>
       }
@@ -20,7 +19,7 @@
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="ph-dialog-actions">
   <button mat-stroked-button (click)="onCancel()">Cancelar</button>
   <button mat-raised-button color="primary" (click)="onConfirm()">Salvar</button>
 </mat-dialog-actions>

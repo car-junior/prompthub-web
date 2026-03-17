@@ -1,35 +1,13 @@
-h2[mat-dialog-title] {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-mat-dialog-content {
-  padding-top: 1rem !important;
-  min-width: min(560px, 90vw);
-}
-
 .row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: .75rem;
+
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
 }
 
-mat-form-field { margin-bottom: .5rem; }
-
-.content-area { font-family: monospace; font-size: .875rem; }
-
-mat-dialog-actions {
-  padding: .75rem 0 0;
-  gap: .75rem;
-  button {
-    min-width: 90px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: .4rem;
-  }
+.content-area {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: .875rem;
+  line-height: 1.6;
 }

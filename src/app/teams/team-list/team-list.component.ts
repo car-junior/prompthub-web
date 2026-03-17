@@ -11,9 +11,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TeamService } from '../services/team.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { Team, TeamSearch } from '../models/team.model';
+import { TeamFormDialogComponent } from '../team-form-dialog/team-form-dialog.component';
 
 @Component({
   selector: 'app-team-list',
@@ -30,6 +32,7 @@ import { Team, TeamSearch } from '../models/team.model';
     MatTooltipModule,
     MatMenuModule,
     MatPaginatorModule,
+    MatDialogModule,
   ],
   templateUrl: './team-list.component.html',
   styleUrls: ['./team-list.component.scss'],
@@ -38,6 +41,7 @@ export class TeamListComponent implements OnInit {
   private readonly teamService = inject(TeamService);
   private readonly notification = inject(NotificationService);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   teams = signal<Team[]>([]);
   loading = signal(false);
@@ -82,12 +86,14 @@ export class TeamListComponent implements OnInit {
     this.router.navigate(['/dashboard/teams', id]);
   }
 
-  goToCreate(): void {
-    this.router.navigate(['/dashboard/teams/new']);
+  openCreate(): void {
+    this.dialog.open(TeamFormDialogComponent, { data: null, width: '480px' })
+      .afterClosed().subscribe(ok => { if (ok) this.load(); });
   }
 
-  goToEdit(id: number): void {
-    this.router.navigate(['/dashboard/teams', id, 'edit']);
+  openEdit(team: Team): void {
+    this.dialog.open(TeamFormDialogComponent, { data: team, width: '480px' })
+      .afterClosed().subscribe(ok => { if (ok) this.load(); });
   }
 
   toggleStatus(team: Team): void {

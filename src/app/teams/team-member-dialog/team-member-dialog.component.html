@@ -1,36 +1,34 @@
-<h2 mat-dialog-title>
+<h2 class="ph-dialog-title">
   <mat-icon>{{ isEdit ? 'manage_accounts' : 'person_add' }}</mat-icon>
   {{ isEdit ? 'Alterar função' : 'Adicionar membro' }}
 </h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="ph-dialog-content">
   <form [formGroup]="form" novalidate>
 
     @if (!isEdit) {
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline">
         <mat-label>ID do usuário</mat-label>
         <input matInput type="number" formControlName="userId" />
-        <mat-icon matPrefix>person</mat-icon>
         @if (userId.hasError('required') && userId.touched) {
           <mat-error>ID do usuário é obrigatório</mat-error>
         }
       </mat-form-field>
     }
 
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline">
       <mat-label>Função no time</mat-label>
       <mat-select formControlName="role">
         @for (r of roles; track r.value) {
           <mat-option [value]="r.value">{{ r.label }}</mat-option>
         }
       </mat-select>
-      <mat-icon matPrefix>badge</mat-icon>
     </mat-form-field>
 
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="ph-dialog-actions">
   <button mat-stroked-button (click)="onCancel()">Cancelar</button>
   <button mat-raised-button color="primary" (click)="onConfirm()">
     {{ isEdit ? 'Salvar' : 'Adicionar' }}

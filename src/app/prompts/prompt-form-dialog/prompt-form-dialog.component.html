@@ -1,0 +1,62 @@
+<h2 class="ph-dialog-title">
+  <mat-icon>{{ isEdit ? 'edit' : 'auto_awesome' }}</mat-icon>
+  {{ isEdit ? 'Editar Prompt' : 'Novo Prompt' }}
+</h2>
+
+<mat-dialog-content class="ph-dialog-content" style="min-width: min(500px, 90vw)">
+  <form [formGroup]="form" novalidate>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+      @if (name.hasError('required') && name.touched) {
+        <mat-error>Nome é obrigatório</mat-error>
+      }
+      @if (name.hasError('minlength') && name.touched) {
+        <mat-error>Mínimo 3 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descrição (opcional)</mat-label>
+      <textarea matInput formControlName="description" rows="2"></textarea>
+    </mat-form-field>
+
+    <div class="field-group">
+      <label class="field-label">Pertence a</label>
+      <mat-radio-group formControlName="ownerType" class="radio-group">
+        <mat-radio-button value="personal">Pessoal</mat-radio-button>
+        <mat-radio-button value="team">Time</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    @if (ownerType.value === 'team') {
+      <mat-form-field appearance="outline">
+        <mat-label>Time</mat-label>
+        <mat-select formControlName="teamId">
+          @for (team of teams(); track team.id) {
+            <mat-option [value]="team.id">{{ team.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tags</mat-label>
+      <mat-select formControlName="tagIds" multiple>
+        @for (tag of tags(); track tag.id) {
+          <mat-option [value]="tag.id">{{ tag.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="ph-dialog-actions">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="loading()">
+    @if (loading()) { <mat-spinner diameter="18" /> }
+    @else { {{ isEdit ? 'Salvar' : 'Criar' }} }
+  </button>
+</mat-dialog-actions>

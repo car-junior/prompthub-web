@@ -1,0 +1,63 @@
+<div class="page-shell">
+
+  <div class="page-back-row">
+    <button mat-icon-button class="back-icon-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Meu Perfil</h1>
+  </div>
+
+  <div class="profile-grid">
+
+    <div class="ph-card profile-info-card">
+      <div class="profile-avatar-lg">{{ username?.charAt(0)?.toUpperCase() }}</div>
+      <span class="profile-username">{{ username }}</span>
+      <span class="badge" [class.badge-warning]="role === 'ADMIN'" [class.badge-info]="role !== 'ADMIN'">
+        {{ role }}
+      </span>
+    </div>
+
+    <div class="ph-card">
+      <h2 class="card-section-title">
+        <mat-icon>lock</mat-icon> Alterar senha
+      </h2>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="profile-form" novalidate>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Senha atual</mat-label>
+          <input matInput type="password" formControlName="currentPassword" autocomplete="current-password" />
+          @if (form.get('currentPassword')?.invalid && form.get('currentPassword')?.touched) {
+            <mat-error>Informe a senha atual</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nova senha</mat-label>
+          <input matInput type="password" formControlName="newPassword" autocomplete="new-password" />
+          @if (form.get('newPassword')?.hasError('minlength') && form.get('newPassword')?.touched) {
+            <mat-error>Mínimo 6 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar nova senha</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" autocomplete="new-password" />
+          @if (mismatch) {
+            <mat-error>As senhas não coincidem</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-submit">
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving()">
+            <mat-icon>save</mat-icon>
+            {{ saving() ? 'Salvando...' : 'Salvar senha' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+</div>

@@ -2,13 +2,22 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
+
+    <!-- Brand -->
     <div class="sidebar-brand">
       <span class="brand-emoji">🤖</span>
       <span class="brand-name">PromptHub</span>
     </div>
 
+    <!-- User profile block -->
+    <div class="sidebar-profile" (click)="goToProfile()" matTooltip="Meu perfil">
+      <div class="sidebar-avatar">{{ username?.charAt(0)?.toUpperCase() }}</div>
+      <span class="sidebar-username">{{ username }}</span>
+      <div class="sidebar-profile-divider"></div>
+    </div>
+
+    <!-- Nav -->
     <nav class="sidebar-nav">
-      <span class="nav-section-label">Menu</span>
       @for (item of visibleNavItems; track item.route) {
         <a class="nav-link"
            [routerLink]="item.route"
@@ -19,15 +28,14 @@
       }
     </nav>
 
+    <!-- Logout -->
     <div class="sidebar-footer">
-      <div class="user-chip">
-        <div class="user-avatar">{{ username?.charAt(0)?.toUpperCase() }}</div>
-        <span class="user-name">{{ username }}</span>
-      </div>
-      <button mat-icon-button class="logout-btn" matTooltip="Sair" (click)="logout()">
+      <button class="nav-link logout-link" (click)="logout()">
         <mat-icon>logout</mat-icon>
+        Sair
       </button>
     </div>
+
   </aside>
 
   <!-- Content -->

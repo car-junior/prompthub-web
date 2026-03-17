@@ -5,7 +5,7 @@
       <h1>Times</h1>
       <p>Gerencie os times da sua organização</p>
     </div>
-    <button mat-raised-button color="primary" (click)="goToCreate()">
+    <button mat-raised-button color="primary" (click)="openCreate()">
       <mat-icon>add</mat-icon> Novo Time
     </button>
   </div>
@@ -35,7 +35,7 @@
     <div class="empty-box ph-card">
       <mat-icon>group_off</mat-icon>
       <p>Nenhum time encontrado.</p>
-      <button mat-raised-button color="primary" (click)="goToCreate()">Criar primeiro time</button>
+      <button mat-raised-button color="primary" (click)="openCreate()">Criar primeiro time</button>
     </div>
   }
 
@@ -59,7 +59,7 @@
               <button mat-menu-item (click)="goToDetail(team.id)">
                 <mat-icon>people</mat-icon> Membros
               </button>
-              <button mat-menu-item (click)="goToEdit(team.id)">
+              <button mat-menu-item (click)="openEdit(team)">
                 <mat-icon>edit</mat-icon> Editar
               </button>
               <button mat-menu-item (click)="toggleStatus(team)">
